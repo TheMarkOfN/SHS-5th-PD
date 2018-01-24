@@ -100,5 +100,17 @@ ENV/
 # mypy
 .mypy_cache/
 
-# Mac hidden file 
+# OS generated files #
+######################
+*/.DS_Store
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+.AppleDouble
+.LSOverride
+hi my name is sam 
