@@ -7,8 +7,8 @@
 ####
 
 team_name = 'Byte Me' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+strategy_name = 'The Social Experiment'
+strategy_description = 'Start with collude, go a pattrern for first 10, then goes to soft majority'
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
@@ -29,7 +29,13 @@ def move(my_history, their_history, my_score, their_score):
     #Notes:
     #Theoretically, there should be 50 'c's and 50 'b's.
     
-    return 'c'
+    if len(their_history)<10:
+        if len(my_history) == 0 or len(my_history) == 3 or len(my_history) == 6 or len(my_history) == 9:
+            return('c')
+        else:
+            return('b')
+    else:
+        
 
     
 def test_move(my_history, their_history, my_score, their_score, result):
