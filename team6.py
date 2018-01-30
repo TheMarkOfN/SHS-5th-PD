@@ -6,9 +6,14 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
+
+import random
+from __future__ import print_function
+
+
 team_name = 'Byte Me' # Only 10 chars displayed.
 strategy_name = 'The Social Experiment'
-strategy_description = 'Start with collude, go a pattrern for first 10, then goes to soft majority'
+strategy_description = 'Start with collude until betrayed, then goes to soft majority'
     
 def move(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
@@ -26,18 +31,37 @@ def move(my_history, their_history, my_score, their_score):
     # Analyze my_history and their_history and/or my_score and their_score.
     # Decide whether to return 'c' or 'b'.
     
-    #Notes:
-    #Theoretically, there should be 50 'c's and 50 'b's.
-    
-    if len(their_history)<10:
-        if len(my_history) == 0 or len(my_history) == 3 or len(my_history) == 6 or len(my_history) == 9:
-            return('c')
-        else:
-            return('b')
+    betrays = 0
+    if not 'b' or 'c' in their_history:
+        return('b')
     else:
-        
+        if len(their_history)<10:
+            if 'b' in their_history:
+                return('b')
+            else:
+                return('c')
+        else:
+            for i in their_history[-1:-10]:
+                if i is 'b': #if a syntax, then replace is with =
+                    betrays = betrays + 1
+            if betrays > 7.5:
+                if random.randint(1,10) < 9.5:
+                    return('b')
+                else:
+                    return('c')
+            if betrays > 5.5 and betrays < 7.5:
+                if random.randint(1,10) < 7.5:
+                    return('b')
+                else:
+                    return('c')
+            if betrays < 5.5:
+                if random.randint(1,10) > 4.5:
+                    return('b')
+                else:
+                    return('c')
+                
+                
 
-    
 def test_move(my_history, their_history, my_score, their_score, result):
     '''calls move(my_history, their_history, my_score, their_score)
     from this module. Prints error if return value != result.
