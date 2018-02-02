@@ -151,7 +151,7 @@ def test_move(my_history, their_history, my_score, their_score):
 
 def move(my_history, their_history, my_score, their_score):
     '''Alternative move number 2'''
-    
+    global betrays
     betrays = 0
     if len(their_history) > 0:
         percent_betrayed = betrays/len(their_history)
@@ -160,9 +160,12 @@ def move(my_history, their_history, my_score, their_score):
     if len(their_history) == 0:
         return('b')
     else:
-        for i in their_history:
-            if i == 'b':
-                betrays = betrays + 1
+        def betray_counter():
+            global betrays
+            for i in their_history:
+                if i == 'b':
+                    betrays = betrays + 1
+        betray_counter()
         if percent_betrayed <= .25:
             if random.randint(1,10) < 2.5:
                 return('c')
