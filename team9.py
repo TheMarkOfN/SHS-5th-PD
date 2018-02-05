@@ -9,7 +9,7 @@ import random
 
 team_name = 'DillyDilly' # Only 10 chars displayed.
 strategy_name = 'Savagery'
-strategy_description = 'How does this strategy decide?'
+strategy_description = 'Collude until Betrayed, do not trust those who have betrayed recently.'
 
 
 
