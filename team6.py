@@ -6,11 +6,14 @@
 #     move: A function that returns 'c' or 'b'
 ####
 
+
+import random
+
 team_name = 'Byte Me' # Only 10 chars displayed.
-strategy_name = 'The name the team gives to this strategy'
-strategy_description = 'How does this strategy decide?'
+strategy_name = 'The Social Experiment'
+strategy_description = 'Start with collude until betrayed, then goes to soft majority'
     
-def move(my_history, their_history, my_score, their_score):
+def test_move_1(my_history, their_history, my_score, their_score):
     ''' Arguments accepted: my_history, their_history are strings.
     my_score, their_score are ints.
     
@@ -26,43 +29,160 @@ def move(my_history, their_history, my_score, their_score):
     # Analyze my_history and their_history and/or my_score and their_score.
     # Decide whether to return 'c' or 'b'.
     
-    return 'c'
-
-    
-def test_move(my_history, their_history, my_score, their_score, result):
-    '''calls move(my_history, their_history, my_score, their_score)
-    from this module. Prints error if return value != result.
-    Returns True or False, dpending on whether result was as expected.
-    '''
-    real_result = move(my_history, their_history, my_score, their_score)
-    if real_result == result:
-        return True
+    betrays = 0
+    if not 'b' or 'c' in their_history:
+        return('b')
     else:
-        print("move(" +
-            ", ".join(["'"+my_history+"'", "'"+their_history+"'",
-                       str(my_score), str(their_score)])+
-            ") returned " + "'" + real_result + "'" +
-            " and should have returned '" + result + "'")
-        return False
+        if len(their_history) == 0:
+            return('b')
+        else:
+            if len(their_history) < 10:
+                if 'b' in their_history:
+                    return('b')
+                else:
+                    return('c')
+            else:
+                for i in their_history[-1:-10]:
+                    if i is 'b': #if a syntax, then replace is with =
+                        betrays = betrays + 1
+                if betrays > 7.5:
+                    if random.randint(1,10) < 9.5:
+                        return('b')
+                    else:
+                        return('c')
+                if betrays > 5.5 and betrays < 7.5:
+                    if random.randint(1,10) < 7.5:
+                        return('b')
+                    else:
+                        return('c')
+                if betrays < 5.5:
+                    if random.randint(1,10) > 4.5:
+                        return('b')
+                    else:
+                        return('c')
+                
+def test_move_2(my_history, their_history, my_score, their_score):
+    ''' Arguments accepted: my_history, their_history are strings.
+    my_score, their_score are ints.
+    
+    Make my move.
+    Returns 'c' or 'b'. 
+    '''
+    betrays = 0
+    if not 'b' or 'c' in their_history:
+        return('b')
+    else:
+        if len(their_history) == 0:
+            return('c')
+        else:
+            if len(their_history) < 10:
+                if 'b' == their_history[-1]:
+                    if len(their_history) > 1:
+                        if 'b' == their_history[-2]:
+                            return('b')
+                        else:
+                            return('c')
+                    else:
+                        return('c')
+                else:
+                    return('b')
+            else:
+                for i in their_history[-1:-10]:
+                    if i is 'b': #if a syntax, then replace is with =
+                        betrays = betrays + 1
+                if betrays > 7.5:
+                    if random.randint(1,10) < 9.5:
+                        return('b')
+                    else:
+                        return('c')
+                if betrays > 5.5 and betrays < 7.5:
+                    if random.randint(1,10) < 7.5:
+                        return('b')
+                    else:
+                        return('c')
+                if betrays < 5.5:
+                    if random.randint(1,10) > 4.5:
+                        return('b')
+                    else:
+                        return('c')
+                
+                    
+def test_move(my_history, their_history, my_score, their_score):
+    ''' Arguments accepted: my_history, their_history are strings.
+    my_score, their_score are ints.
+    
+    Make my move.
+    Returns 'c' or 'b'. 
+    '''
+    betrays = 0
+    if not 'b' or 'c' in their_history:
+        return('b')
+    else:
+        if len(their_history) == 0:
+            return('c')
+        else:
+            if len(their_history) < 10:
+                if 'bbb' in their_history:
+                    return('b')
+                else:
+                    if random.randint(1,10) > 2.5:
+                        return('c')
+                    else:
+                        return('b')
+            else:
+                for i in their_history[-1:-20]:
+                    if i is 'b': #if a syntax, then replace is with =
+                        betrays = betrays + 1
+                if betrays > 7.5:
+                    if random.randint(1,10) < 18.5:
+                        return('b')
+                    else:
+                        return('c')
+                if betrays > 5.5 and betrays < 15.5:
+                    if random.randint(1,10) < 7.5:
+                        return('b')
+                    else:
+                        return('c')
+                if betrays < 10.5:
+                    if random.randint(1,10) > 4.5:
+                        return('b')
+                    else:
+                        return('c')
 
-if __name__ == '__main__':
-     
-    # Test 1: Betray on first move.
-    if test_move(my_history='',
-              their_history='', 
-              my_score=0,
-              their_score=0,
-              result='b'):
-         print 'Test passed'
-     # Test 2: Continue betraying if they collude despite being betrayed.
-    test_move(my_history='bbb',
-              their_history='ccc', 
-              # Note the scores are for testing move().
-              # The history and scores don't need to match unless
-              # that is relevant to the test of move(). Here,
-              # the simulation (if working correctly) would have awarded 
-              # 300 to me and -750 to them. This test will pass if and only if
-              # move('bbb', 'ccc', 0, 0) returns 'b'.
-              my_score=0, 
-              their_score=0,
-              result='b')             
+def move(my_history, their_history, my_score, their_score):
+    '''Alternative move number 2'''
+    global betrays
+    betrays = 0
+    if len(their_history) > 0:
+        percent_betrayed = betrays/len(their_history)
+    else:
+        percent_betrayed = 0
+    if len(their_history) == 0:
+        return('b')
+    else:
+        def betray_counter():
+            global betrays
+            for i in their_history:
+                if i == 'b':
+                    betrays = betrays + 1
+        betray_counter()
+        if percent_betrayed <= .25:
+            if random.randint(1,10) < 2.5:
+                return('c')
+            else:
+                return('b')
+        if percent_betrayed > .25 and percent_betrayed <= .5:
+            if random.randint(1,10) < 4.5:
+                return('c')
+            else:
+                return('b')
+        if percent_betrayed >.5 and percent_betrayed <=  .75:
+            if random.randint(1,10) > .45:
+                return('c')
+            else:
+                return('b')
+        if percent_betrayed > .75:
+            if random.randint > 7.5:
+                return('c')
+            else:
+                return('b')
