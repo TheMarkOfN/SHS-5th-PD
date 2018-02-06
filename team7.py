@@ -25,8 +25,20 @@ def move(my_history, their_history, my_score, their_score):
     
     # Analyze my_history and their_history and/or my_score and their_score.
     # Decide whether to return 'c' or 'b'.
-    
-    return 'c'
+    if len(my_history)==0: #collude first round
+        return 'c'
+         
+    else:
+        if 'b' in my_history[-5:]:
+            return 'c'
+        else:
+            if their_history[-1]=='b':
+                return 'b'
+            else: 
+                if their_history[-1]=='C':
+                    return 'c'
+    return 'b'    
+
 
     
 def test_move(my_history, their_history, my_score, their_score, result):
