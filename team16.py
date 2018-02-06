@@ -5,7 +5,7 @@
 #     strategy_description: a string
 #     move: A function that returns 'c' or 'b'
 ####
-
+import random
 team_name = 'Domination' # Only 10 chars displayed.
 strategy_name = 'Example Dominator'
 strategy_description = 'It looks in the history of all examples and will dominate all the examples'
