@@ -40,16 +40,4 @@ def move(my_history, their_history, my_score, their_score):
            return anticipate_betray(my_history, their_history)
         elif their_history[-1] == 'b':
             return 'b'
-'''
-   
-    if len(my_history) == 0:
-        return 'c'
-    if len(my_history)>0:
-        if their_history[-1] == 'c':
-            if len(my_history)>1 and their_history[-2] == 'b':
-                return 'b'
-            else:
-                return 'c' 
-        elif their_history[-1] == 'b':
-            return 'b'
-'''           
+
